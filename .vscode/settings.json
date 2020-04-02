@@ -1,0 +1,8 @@
+{
+    "prettier.singleQuote": true,
+    "prettier.bracketSpacing": false,
+    "prettier.endOfLine": "lf",
+    "prettier.useEditorConfig": false,
+    "standard.semistandard": true,
+    "eslint.run": "onSave"
+}

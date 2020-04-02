@@ -1,0 +1,29 @@
+{
+    "name": "virtual-keyboard",
+    "version": "1.0.0",
+    "description": "virtual keyboard task",
+    "main": "script.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "style": "sass --watch scss/style.scss style.css",
+        "lint": "eslint -c .eslintrc.json script.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vmashnitskaya/virtual-keyboard.git"
+    },
+    "author": "Volha Mashnitskaya",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/vmashnitskaya/virtual-keyboard/issues"
+    },
+    "homepage": "https://github.com/vmashnitskaya/virtual-keyboard#readme",
+    "dependencies": {
+        "sass": "^1.26.3"
+    },
+    "devDependencies": {
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-base": "^14.1.0",
+        "eslint-plugin-import": "^2.20.1"
+    }
+}
