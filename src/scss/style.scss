@@ -77,6 +77,10 @@
                 background-color: darken($color: #e0a09f, $amount: 10);
                 border: 3px double darken($color: #e0a09f, $amount: 20);
             }
+            &.highlighted{
+                background-color: darken($color: #e0a09f, $amount: 10);
+                border: 3px double darken($color: #e0a09f, $amount: 20);
+            }
             &.hidden {
                 display: none;
             }
