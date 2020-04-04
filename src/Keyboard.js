@@ -50,8 +50,6 @@ export default class Keyboard {
     const body = document.querySelector('body');
     body.addEventListener('keydown', this.handleKeyDown);
     body.addEventListener('keyup', this.handleKeyUp);
-
-    console.log(`this.properties.capsLock${this.properties.capsLock}`);
   }
 
   setTextarea(textarea) {
@@ -158,8 +156,6 @@ export default class Keyboard {
 
   toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
-    console.log(`this.properties.capsLock  IN TOGGE ${this.properties.capsLock}`);
-    console.log(`!this.properties.capsLock ${!this.properties.capsLock}`);
 
     for (let i = 0; i < this.elements.keys.length; i += 1) {
       const key = this.elements.keys[i];
@@ -219,15 +215,16 @@ export default class Keyboard {
   }
 
   handleKeyDown = (event) => {
-    /* if (/[a-zA-Z]/.test(event.key) && event.key.length === 1 && event.code !== 'Space' && this.properties.lang === 'ru') {
+    /* if (/[a-zA-Z]/.test(event.key) && event.key.length === 1 && event.code !== 'Space'
+    && this.properties.lang === 'ru') {
       this.initAFterLangChange();
-    } else if (/[а-яА-Я]/i.test(event.key) && event.key.length === 1 && event.code !== 'Space' && this.properties.lang === 'en') {
+    } else if (/[а-яА-Я]/i.test(event.key) && event.key.length === 1 && event.code !== 'Space'
+    && this.properties.lang === 'en') {
       this.initAFterLangChange();
     } */
 
     this.pressed.add(event.code);
 
-    console.log(`this.prop.caps in keydown ${this.properties.capsLock}`);
     document.querySelectorAll(event.key.length === 1 && event.code !== 'Space' ? `.code${event.key.charCodeAt(0)}` : `.${event.code}`)
       .forEach((element) => element.classList.add('animated'));
     /* if ((this.pressed.size === 1 && this.pressed.has('ShiftLeft'))) {
@@ -242,7 +239,7 @@ export default class Keyboard {
     document.querySelectorAll(event.key.length === 1 && event.code !== 'Space' ? `.code${event.key.charCodeAt(0)}` : `.${event.code}`)
       .forEach((element) => element.classList.remove('animated'));
     if ((this.pressed.size === 1 && this.pressed.has('ShiftLeft'))) {
-
+      this.initAFterLangChange();
     }
     if (this.pressed.size === 2 && this.pressed.has('ShiftLeft') && this.pressed.has('AltLeft')) {
       this.initAFterLangChange();
