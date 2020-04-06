@@ -15,9 +15,11 @@
     
     textarea {
         width: 100%;
-        height: 200px;
+        height: 250px;
         padding: 20px;
+        border-radius: 10px;
         resize: none;
+        outline: none;
     }
     
     .note {
@@ -34,8 +36,8 @@
         user-select: none;
         background-color: #e0a09f;
         border-radius: 10px;
-        border: 5px double darken($color: #e0a09f, $amount: 20);
         text-align: center;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.15);
         &__key {
             display: inline-flex;
             justify-content: center;
@@ -48,16 +50,14 @@
             outline: none;
             color: #544444;
             background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.15);
             &-extra-wide {
-                width: 250px;
+                width: 236px;
             }
             &-wide {
                 width: 140px;
             }
             &-enter {
-                width: 130px;
-            }
-            &-shift_right {
                 width: 130px;
             }
             &-medium {
@@ -68,17 +68,17 @@
             }
             &:hover {
                 cursor: pointer;
-                background-color: darken($color: #e0a09f, $amount: 10);
+                background-color: darken($color: #e0a09f, $amount: 4);
             }
             &.animated {
                 animation-name: to-center;
                 animation-duration: 1s;
                 animation-timing-function: linear;
-                background-color: darken($color: #e0a09f, $amount: 10);
+                background-color: darken($color: #e0a09f, $amount: 4);
                 border: 3px double darken($color: #e0a09f, $amount: 20);
             }
             &.highlighted{
-                background-color: darken($color: #e0a09f, $amount: 10);
+                background-color: darken($color: #e0a09f, $amount: 4);
                 border: 3px double darken($color: #e0a09f, $amount: 20);
             }
             &.hidden {

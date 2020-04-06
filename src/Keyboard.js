@@ -5,8 +5,8 @@ export default class Keyboard {
       lang: window.localStorage.getItem('lang') ? window.localStorage.getItem('lang') : 'en',
     };
     this.altphabets = {
-      keyLayoutEn: ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'Caps lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl'],
-      keyLayoutRu: ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del', 'Caps lock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space', 'Alt', 'Ctrl'],
+      keyLayoutEn: ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'Caps lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '&#9651', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space', '&#9665', '&#9661', '&#9655'],
+      keyLayoutRu: ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del', 'Caps lock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '&#9651', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space', '&#9665', '&#9661', '&#9655'],
     };
     this.elements = {
       main: null,
@@ -57,30 +57,13 @@ export default class Keyboard {
     this.textarea = textarea;
   }
 
-  changeLanguage() {
-    this.properties.lang = (this.properties.lang === 'en') ? 'ru' : 'en';
-
-    window.localStorage.setItem('lang', this.properties.lang);
-  }
-
-  initAFterLangChange() {
-    this.changeLanguage();
-
-    const language = this.properties.lang === 'en' ? ['en', 'ru'] : ['ru', 'en'];
-    document.querySelectorAll(`.${language[0]}`)
-      .forEach((element) => element.classList.remove('hidden'));
-
-    document.querySelectorAll(`.${language[1]}`)
-      .forEach((element) => element.classList.add('hidden'));
-  }
-
   static createKeys(althabet, ...classes) {
     const fragment = document.createDocumentFragment();
     althabet.forEach((element) => {
       const key = document.createElement('button');
       key.setAttribute('type', 'button');
       key.classList.add('keyboard__key', ...classes);
-      key.textContent = element;
+      key.innerHTML = element;
 
       switch (true) {
         case element === 'Backspace':
@@ -99,7 +82,7 @@ export default class Keyboard {
           if (!fragment.querySelector('.ShiftLeft')) {
             key.classList.add('keyboard__key-medium', 'ShiftLeft');
           } else {
-            key.classList.add('keyboard__key-shift_right', 'ShiftRight');
+            key.classList.add('keyboard__key-medium', 'ShiftRight');
           }
           break;
 
@@ -116,29 +99,29 @@ export default class Keyboard {
           break;
 
         case element === 'Win':
-          if (!fragment.querySelector('.MetaLeft')) {
-            key.classList.add('keyboard__key-small', 'MetaLeft');
-          } else {
-            key.classList.add('keyboard__key-small', 'MetaRight');
-          }
+          key.classList.add('keyboard__key-small', 'MetaLeft');
           break;
 
         case element === 'Alt':
-          if (!fragment.querySelector('.AltLeft')) {
-            key.classList.add('keyboard__key-small', 'AltLeft');
-          } else {
-            key.classList.add('keyboard__key-small', 'AltRight');
-          }
+          key.classList.add('keyboard__key-small', 'AltLeft');
           break;
 
         case element === 'Ctrl':
-          if (!fragment.querySelector('.ControlLeft')) {
-            key.classList.add('keyboard__key-small', 'ControlLeft');
-          } else {
-            key.classList.add('keyboard__key-small', 'ControlRight');
-          }
+          key.classList.add('keyboard__key-small', 'ControlLeft');
           break;
 
+        case element === '&#9651':
+          key.classList.add('ArrowUp');
+          break;
+        case element === '&#9665':
+          key.classList.add('ArrowLeft');
+          break;
+        case element === '&#9661':
+          key.classList.add('ArrowDown');
+          break;
+        case element === '&#9655':
+          key.classList.add('ArrowRight');
+          break;
         default:
           key.classList.add(`code${element.toUpperCase().charCodeAt(0)}`, `code${element.toLowerCase().charCodeAt(0)}`);
           break;
@@ -154,6 +137,23 @@ export default class Keyboard {
     return fragment;
   }
 
+  changeLanguage() {
+    this.properties.lang = (this.properties.lang === 'en') ? 'ru' : 'en';
+
+    window.localStorage.setItem('lang', this.properties.lang);
+  }
+
+  initAFterLangChange() {
+    this.changeLanguage();
+
+    const language = this.properties.lang === 'en' ? ['en', 'ru'] : ['ru', 'en'];
+    document.querySelectorAll(`.${language[0]}`)
+      .forEach((element) => element.classList.remove('hidden'));
+
+    document.querySelectorAll(`.${language[1]}`)
+      .forEach((element) => element.classList.add('hidden'));
+  }
+
   toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
 
@@ -166,6 +166,23 @@ export default class Keyboard {
     }
   }
 
+  changeCapsLockColor(element) {
+    if (element.classList.contains('highlighted', `${this.properties.lang}`)) {
+      element.classList.remove('highlighted');
+    } else {
+      element.classList.add('highlighted');
+    }
+  }
+
+  detectLanguage(event) {
+    if (/[a-zA-Z]/.test(event.key) && event.key.length === 1 && event.code !== 'Space'
+    && this.properties.lang === 'ru') {
+      this.initAFterLangChange();
+    } else if (/[а-яА-Я]/i.test(event.key) && event.key.length === 1 && event.code !== 'Space'
+    && this.properties.lang === 'en') {
+      this.initAFterLangChange();
+    }
+  }
 
   handleMouseDown = (event) => {
     if (event.target.classList.contains('keyboard__key')) {
@@ -215,32 +232,20 @@ export default class Keyboard {
   }
 
   handleKeyDown = (event) => {
-    /* if (/[a-zA-Z]/.test(event.key) && event.key.length === 1 && event.code !== 'Space'
-    && this.properties.lang === 'ru') {
-      this.initAFterLangChange();
-    } else if (/[а-яА-Я]/i.test(event.key) && event.key.length === 1 && event.code !== 'Space'
-    && this.properties.lang === 'en') {
-      this.initAFterLangChange();
-    } */
+    this.detectLanguage(event);
 
+    // Add code of element to Set with pressed buttons codes
     this.pressed.add(event.code);
 
     document.querySelectorAll(event.key.length === 1 && event.code !== 'Space' ? `.code${event.key.charCodeAt(0)}` : `.${event.code}`)
       .forEach((element) => element.classList.add('animated'));
-    /* if ((this.pressed.size === 1 && this.pressed.has('ShiftLeft'))) {
-      this.properties.capsLock = !this.properties.capsLock;
-    } */
+
     if (this.pressed.has('CapsLock')) {
+      const element = document.querySelector(`.${event.code}.${this.properties.lang}`);
+      this.changeCapsLockColor(element);
       this.toggleCapsLock();
     }
-  }
 
-  handleKeyUp = (event) => {
-    document.querySelectorAll(event.key.length === 1 && event.code !== 'Space' ? `.code${event.key.charCodeAt(0)}` : `.${event.code}`)
-      .forEach((element) => element.classList.remove('animated'));
-    if ((this.pressed.size === 1 && this.pressed.has('ShiftLeft'))) {
-      this.initAFterLangChange();
-    }
     if (this.pressed.size === 2 && this.pressed.has('ShiftLeft') && this.pressed.has('AltLeft')) {
       this.initAFterLangChange();
     }
@@ -248,6 +253,42 @@ export default class Keyboard {
       this.textarea.value += '    ';
       this.textarea.focus();
     }
+
+    if ((this.pressed.size === 1 && this.pressed.has('ShiftLeft')) || (this.pressed.size === 1 && this.pressed.has('ShiftRight'))) {
+      if (event.repeat) { return; }
+      this.toggleCapsLock();
+    }
+
+    switch (true) {
+      case this.pressed.has('ArrowUp'):
+        this.textarea.value += '△';
+        event.preventDefault();
+        break;
+      case this.pressed.has('ArrowDown'):
+        this.textarea.value += '▽';
+        event.preventDefault();
+        break;
+      case this.pressed.has('ArrowLeft'):
+        this.textarea.value += '◁';
+        event.preventDefault();
+        break;
+      case this.pressed.has('ArrowRight'):
+        this.textarea.value += '▷';
+        event.preventDefault();
+        break;
+      default:
+        break;
+    }
+  }
+
+  handleKeyUp = (event) => {
+    document.querySelectorAll(event.key.length === 1 && event.code !== 'Space' ? `.code${event.key.charCodeAt(0)}` : `.${event.code}`)
+      .forEach((element) => element.classList.remove('animated'));
+    if ((this.pressed.size === 1 && this.pressed.has('ShiftLeft')) || (this.pressed.size === 1 && this.pressed.has('ShiftRight'))) {
+      this.toggleCapsLock();
+    }
+
+    // Clear Set of pressed buttons
     this.pressed.clear();
   }
 }
