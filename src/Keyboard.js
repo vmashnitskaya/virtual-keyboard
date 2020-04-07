@@ -145,10 +145,12 @@ export default class Keyboard {
 
   initAFterLangChange() {
     this.changeLanguage();
-
     const language = this.properties.lang === 'en' ? ['en', 'ru'] : ['ru', 'en'];
+
     document.querySelectorAll(`.${language[0]}`)
-      .forEach((element) => element.classList.remove('hidden'));
+      .forEach((element) => {
+        element.classList.remove('hidden');
+      });
 
     document.querySelectorAll(`.${language[1]}`)
       .forEach((element) => element.classList.add('hidden'));
@@ -157,6 +159,10 @@ export default class Keyboard {
   toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
 
+    this.changeRegister();
+  }
+
+  changeRegister() {
     for (let i = 0; i < this.elements.keys.length; i += 1) {
       const key = this.elements.keys[i];
       if (key.textContent.length === 1) {
@@ -169,7 +175,7 @@ export default class Keyboard {
   changeCapsLockColor(element) {
     if (element.classList.contains('highlighted', `${this.properties.lang}`)) {
       element.classList.remove('highlighted');
-    } else {
+    } else if (!element.classList.contains('highlighted', `${this.properties.lang}`)) {
       element.classList.add('highlighted');
     }
   }
@@ -195,6 +201,7 @@ export default class Keyboard {
             .substring(0, this.textarea.value.length - 1);
           break;
         case 'Caps lock':
+          this.changeCapsLockColor(document.querySelector(`.CapsLock.${this.properties.lang}`));
           this.toggleCapsLock();
           break;
         case 'Shift':
@@ -248,13 +255,14 @@ export default class Keyboard {
 
     if (this.pressed.size === 2 && this.pressed.has('ShiftLeft') && this.pressed.has('AltLeft')) {
       this.initAFterLangChange();
+      if (this.properties.capsLock) document.querySelector(`.CapsLock.${this.properties.lang}`).classList.add('highlighted');
     }
     if (this.pressed.has('Tab')) {
       this.textarea.value += '    ';
       this.textarea.focus();
     }
 
-    if ((this.pressed.size === 1 && this.pressed.has('ShiftLeft')) || (this.pressed.size === 1 && this.pressed.has('ShiftRight'))) {
+    if ((this.pressed.has('ShiftLeft') && !this.pressed.has('AltLeft')) || this.pressed.has('ShiftRight')) {
       if (event.repeat) { return; }
       this.toggleCapsLock();
     }
