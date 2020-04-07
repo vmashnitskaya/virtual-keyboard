@@ -218,6 +218,7 @@ export default class Keyboard {
           break;
         case 'Alt':
         case 'Ctrl':
+        case 'Win':
           break;
         default:
           this.textarea.value += this.properties.capsLock

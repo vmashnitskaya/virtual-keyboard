@@ -9,7 +9,7 @@
         "lint:fix": "npm run lint -- --fix",
         "dev": "webpack-dev-server --open --mode development",
         "prod": "npm run lint && webpack --mode production",
-        "deploy": "git subtree push --prefix dist origin gh-pages"
+        "deploy": "git push origin --delete gh-pages && git subtree push --prefix dist origin gh-pages"
     },
     "repository": {
         "type": "git",
